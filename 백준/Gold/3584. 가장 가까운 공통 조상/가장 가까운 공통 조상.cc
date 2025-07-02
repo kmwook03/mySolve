@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <unordered_set>
 
 using namespace std;
 
@@ -26,41 +26,19 @@ int main()
         int c1, c2;
         cin >> c1 >> c2;
 
-        vector<int> ancestor1;
-        ancestor1.emplace_back(c1);
-        vector<int> ancestor2;
-        ancestor2.emplace_back(c2);
+        unordered_set<int> visited;
 
-        int c1_root = 0;
-        int c2_root = 0;
-
-
-        
-        while (!c1_root || !c2_root) {
-            if (parents[ancestor1.back()]) ancestor1.emplace_back(parents[ancestor1.back()]);
-            else c1_root = 1;
-            if (parents[ancestor2.back()]) ancestor2.emplace_back(parents[ancestor2.back()]);
-            else c2_root = 1;
+        while (c1) {
+            visited.insert(c1);
+            c1 = parents[c1];
         }
-        
-        if (ancestor1.size() < ancestor2.size()) {
-            for (auto a : ancestor2) {
-                auto iter = find_if(ancestor1.begin(), ancestor1.end(), [a](auto i){ return a == i; });
-                if (iter != ancestor1.end()) {
-                    cout << *iter << '\n';
-                    break;
-                }
-            }
-        } else {
-            for (auto a : ancestor1) {
-                auto iter = find_if(ancestor2.begin(), ancestor2.end(), [a](auto i){ return a == i; });
-                if (iter != ancestor2.end()) {
-                    cout << *iter << '\n';
-                    break;
-                }
-            }
+
+        while (c2) {
+            if (visited.count(c2)) {
+                cout << c2 << '\n';
+                break;
+            } else c2 = parents[c2];
         }
     }
-
     return 0;
 }
