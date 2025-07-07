@@ -39,12 +39,12 @@ int main()
 
     for (auto i=1; i<n+1; i++) root[i] = i;
 
-    std::vector<std::vector<int>> cities(n, std::vector<int>(n, 0));
     std::vector<int> route(m);
     for (auto i=0; i<n; i++) {
         for (auto j=0; j<n; j++) {
-            std::cin >> cities[i][j];
-            if (cities[i][j]) Union(i+1, j+1);
+            int point = 0;
+            std::cin >> point;
+            if (point) Union(i+1, j+1);
         }
     }
 
