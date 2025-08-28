@@ -1,23 +1,26 @@
 #include <iostream>
-#include <vector>
+#include <queue>
 
 int main() {
     int n, k;
     std::cin >> n >> k;
-    int target_p = k-1;
-    int step = 0;
-    std::vector<int> positions(n);
+
+    std::queue<int> positions;
+    for (auto i = 1; i<= n; i++) positions.push(i);
+    int step = 1;
 
     std::cout << "<";
-    for (auto i=0; i<n-1; i++) {
-        std::cout << target_p+1 << ", ";
-        positions[target_p]++;
-        while (step < k) {
-            target_p++;
-            target_p %= n;
-            if (!positions[target_p]) step++;
+    while (positions.size() != 1) {
+        if (step == k) {
+            std::cout << positions.front() << ", ";
+            positions.pop();
+            step = 0;
         }
-        step = 0;
+        else {
+            positions.push(positions.front());
+            positions.pop();
+        }
+        step++;
     }
-    std::cout << target_p+1 << ">\n";
+    std::cout << positions.front() << ">\n";
 }
