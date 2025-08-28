@@ -7,20 +7,15 @@ int main() {
 
     std::queue<int> positions;
     for (auto i = 1; i<= n; i++) positions.push(i);
-    int step = 1;
 
     std::cout << "<";
-    while (positions.size() != 1) {
-        if (step == k) {
-            std::cout << positions.front() << ", ";
-            positions.pop();
-            step = 0;
-        }
-        else {
+    while (positions.size() > 1) {
+        for (int i=0; i<k-1; i++) {
             positions.push(positions.front());
             positions.pop();
         }
-        step++;
+        std::cout << positions.front() << ", ";
+        positions.pop();
     }
     std::cout << positions.front() << ">\n";
 }
